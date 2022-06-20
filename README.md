@@ -13,7 +13,7 @@ export CLIENT_SECRET=<client-secret>
 Now run the application using
 
 ```bash
-./gradlew :azure-oauth2-demo:bootRun
+mvn spring-boot:run
 ```
 
 Open `https://<host-name>/home`
