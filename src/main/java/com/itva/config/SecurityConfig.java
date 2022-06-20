@@ -1,4 +1,4 @@
-package demo.security.azure.config;
+package com.itva.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure( HttpSecurity http ) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers( "/oauth2/**", "/login/**" ).permitAll()
+                .antMatchers( "/oauth2/**", "/login/**", "/flow/**" ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()

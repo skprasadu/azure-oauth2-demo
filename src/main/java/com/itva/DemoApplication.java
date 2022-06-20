@@ -1,4 +1,4 @@
-package demo.security.azure;
+package com.itva;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

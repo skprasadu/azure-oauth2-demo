@@ -36,3 +36,5 @@ obj/
 .settings
 .project
 .classpath
+
+**/node_modules

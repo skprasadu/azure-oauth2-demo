@@ -1,4 +1,4 @@
-package demo.security.azure.controllers;
+package com.itva.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -51,6 +51,11 @@ public class HomeController {
 			HttpMethod.GET, entity, String.class);
 
 		System.out.println(response.getBody());
+	}
+	
+	@GetMapping("/flow/view")
+	public String flow() {
+		return "/flow/view";
 	}
 
 }
