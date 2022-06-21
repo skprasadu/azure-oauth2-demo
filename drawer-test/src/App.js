@@ -171,6 +171,7 @@ export default function MiniDrawer() {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <Routes>
+            <Route exact path="/" element={<Dashboard />}/>
             <Route exact path="/dashboard" element={<Dashboard />}/>
             <Route exact path="/table" element={<Table />}/>
           </Routes>
