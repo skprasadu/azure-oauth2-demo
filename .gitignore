@@ -1,5 +1,5 @@
 # Build output
-target/
+**/target/
 *.class
 
 # Log file
@@ -33,8 +33,8 @@ hs_err_pid*
 # local.settings.json
 bin/
 obj/
-.settings
-.project
-.classpath
+**/.settings
+**/.project
+**/.classpath
 
 **/node_modules
