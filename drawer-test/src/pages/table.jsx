@@ -20,7 +20,7 @@ export default function BasicTable() {
     setLoading(true);
     const result = await axios(
       //'https://tc-func-app1.azurewebsites.net/api/listTitusAuditLogs',
-      'http://localhost:7071/api/listTitusAuditLogs',
+      '/api/listTitusAuditLogs',
     );
     setData(result.data);
     setLoading(false);
