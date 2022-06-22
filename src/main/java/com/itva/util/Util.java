@@ -112,7 +112,7 @@ public class Util {
 		String url1 = "https://graph.microsoft.com/v1.0/sites/tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482/lists/29bbaa17-b9ab-4695-a794-a671921894a0/items";
 		ResponseEntity<String> response = restTemplate.exchange(url1, HttpMethod.GET, entity, String.class);
 
-		System.out.println(response.getBody());
+		//System.out.println(response.getBody());
 		FileCollection fileCollection = new Gson().fromJson(response.getBody(), FileCollection.class);
 		
 		Integer id = -1;
@@ -128,14 +128,14 @@ public class Util {
 				
 			ResponseEntity<String> response1 = restTemplate.exchange(url2, HttpMethod.GET, entity, String.class);
 
-			System.out.println(response1.getBody());
+			//System.out.println(response1.getBody());
 			
 			ItemIdDetails itemIdDetails = new Gson().fromJson(response1.getBody(), ItemIdDetails.class);
 			
 			String url3 = String.format("https://graph.microsoft.com/v1.0/drives/b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg/items/%s/analytics/allTime?$expand=activities($filter=access ne null)", itemIdDetails.getId());
 			ResponseEntity<String> response2 = restTemplate.exchange(url3, HttpMethod.GET, entity, String.class);
 
-			System.out.println(response1.getBody());
+			//System.out.println(response1.getBody());
 			
 			VisitorsPayload visitorsPayload = new Gson().fromJson(response2.getBody(), VisitorsPayload.class);
 			return visitorsPayload;

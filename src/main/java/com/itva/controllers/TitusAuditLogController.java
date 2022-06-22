@@ -38,16 +38,20 @@ public class TitusAuditLogController {
 	private OAuth2AuthorizedClientService clientService;
 
 	@GetMapping("listTitusAuditLogs")
-	public List<TitusAttributes> listTitusAuditLogs() {
-		VisitorsPayload visitorsPayload = Util.getItemIdDetails("test.txt", getToken());
-		System.out.println("visitorsPayload=" + visitorsPayload);
-		
+	public List<TitusAttributes> listTitusAuditLogs() {		
 		logger.debug("******* In listTitusAuditLogs");
 		
 		List<TitusDocument> tds = titusDocumentRepository.findAll();
 		List<TitusAttribute> taList = titusAttributeRepository.findAll();
 
 		List<TitusAttributes> list = Util.convertToTitusAttributes(tds, taList);
+		
+		for(TitusAttributes t: list) {
+			VisitorsPayload visitorsPayload = Util.getItemIdDetails(t.getDocumentName(), getToken());
+			if(visitorsPayload != null) {
+				System.out.println("fileName=" + t.getDocumentName() + " visitorsPayload=" + visitorsPayload);
+			}
+		}
 
 		Collections.sort(list, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()));
 
@@ -61,7 +65,7 @@ public class TitusAuditLogController {
 		OAuth2AuthorizedClient client = clientService
 				.loadAuthorizedClient(oauth2Token.getAuthorizedClientRegistrationId(), oauth2Token.getName());
 
-		System.out.println("token=" + client.getAccessToken().getTokenValue());
+		//System.out.println("token=" + client.getAccessToken().getTokenValue());
 		return client.getAccessToken().getTokenValue();
 	}
 
