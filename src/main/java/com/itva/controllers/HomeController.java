@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.itva.model.activitiespayload.VisitorsPayload;
+import com.itva.util.Util;
+
 @RestController
 public class HomeController {
 	@Autowired
@@ -33,10 +36,10 @@ public class HomeController {
 		System.out.println(" " + client.getAccessToken().getTokenValue());
 		
         getData(client.getAccessToken().getTokenValue());
-
+		
 		return String.format("Hello %s!  welcome to the Security app", name);
 	}
-	
+
 	private static void getData(String token) {
 		// TODO Auto-generated method stub
 		RestTemplate restTemplate = new RestTemplate();
