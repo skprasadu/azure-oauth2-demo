@@ -1,0 +1,85 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.itemActivityStat",
+    "aggregationInterval": "None",
+    "startDateTime": "0001-01-01T00:00:00Z",
+    "endDateTime": "0001-01-01T00:00:00Z",
+    "isTrending": false,
+    "access": {
+        "actionCount": 6,
+        "actorCount": 3,
+        "timeSpentInSeconds": 0
+    },
+    "incompleteData": {
+        "wasThrottled": false,
+        "resultsPending": false,
+        "notSupported": false
+    },
+    "activities": [
+        {
+            "id": "00000",
+            "activityDateTime": "2022-06-14T17:45:58Z",
+            "location": {
+                "address": {
+                    "city": "",
+                    "countryOrRegion": "",
+                    "postalCode": "",
+                    "state": "",
+                    "street": ""
+                }
+            },
+            "access": {},
+            "actor": {
+                "user": {
+                    "displayName": "Matt Henson",
+                    "email": "matt.henson@tcengine.com",
+                    "id": "d6bce0dc-03cd-4c88-a933-157e61fdafcc",
+                    "userType": "Internal"
+                }
+            }
+        },
+        {
+            "id": "00001",
+            "activityDateTime": "2022-06-14T16:32:47Z",
+            "location": {
+                "address": {
+                    "city": "",
+                    "countryOrRegion": "",
+                    "postalCode": "",
+                    "state": "",
+                    "street": ""
+                }
+            },
+            "access": {},
+            "actor": {
+                "user": {
+                    "displayName": "Dave Harris",
+                    "email": "dave.harris@tcengine.com",
+                    "id": "d482f458-6964-49ef-b271-cdca025897af",
+                    "userType": "Internal"
+                }
+            }
+        },
+        {
+            "id": "00002",
+            "activityDateTime": "2022-06-14T16:04:44Z",
+            "location": {
+                "address": {
+                    "city": "",
+                    "countryOrRegion": "",
+                    "postalCode": "",
+                    "state": "",
+                    "street": ""
+                }
+            },
+            "access": {},
+            "actor": {
+                "user": {
+                    "displayName": "Krishna Prasad",
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "userType": "Internal"
+                }
+            }
+        }
+    ]
+}

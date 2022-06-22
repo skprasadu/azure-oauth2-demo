@@ -1,0 +1,125 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('tradecollaborationengine.sharepoint.com%2C851fe44e-f427-4478-bbf2-17451f4fe782%2C799be97d-8a9e-420a-a985-b461f43bb482')/lists('29bbaa17-b9ab-4695-a794-a671921894a0')/items",
+    "value": [
+        {
+            "@odata.etag": "\"e89f105a-00b4-4e2c-b267-d1b7a041cbd9,28\"",
+            "createdDateTime": "2022-05-04T22:40:09Z",
+            "eTag": "\"e89f105a-00b4-4e2c-b267-d1b7a041cbd9,28\"",
+            "id": "1",
+            "lastModifiedDateTime": "2022-05-31T21:02:54Z",
+            "webUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/Shared%20Documents/test.txt",
+            "createdBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "lastModifiedBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "parentReference": {
+                "id": "8e7ec6ff-ad65-4396-ba45-182b5c6df744",
+                "siteId": "tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482"
+            },
+            "contentType": {
+                "id": "0x010100DA0D4393244A8E4A876CEE23FCC24C12",
+                "name": "Document"
+            }
+        },
+        {
+            "@odata.etag": "\"561368cc-cc14-4fc6-942b-b8c41446c4c6,3\"",
+            "createdDateTime": "2022-05-31T00:30:25Z",
+            "eTag": "\"561368cc-cc14-4fc6-942b-b8c41446c4c6,3\"",
+            "id": "6",
+            "lastModifiedDateTime": "2022-05-31T00:30:25Z",
+            "webUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/Shared%20Documents/Old_ECI-No.docx",
+            "createdBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "lastModifiedBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "parentReference": {
+                "id": "8e7ec6ff-ad65-4396-ba45-182b5c6df744",
+                "siteId": "tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482"
+            },
+            "contentType": {
+                "id": "0x010100DA0D4393244A8E4A876CEE23FCC24C12",
+                "name": "Document"
+            }
+        },
+        {
+            "@odata.etag": "\"c11a9226-7099-4b17-b70b-52aa473b49d1,2\"",
+            "createdDateTime": "2022-05-31T20:48:28Z",
+            "eTag": "\"c11a9226-7099-4b17-b70b-52aa473b49d1,2\"",
+            "id": "7",
+            "lastModifiedDateTime": "2022-05-31T20:48:28Z",
+            "webUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/Shared%20Documents/Old_ECI-Yes.docx",
+            "createdBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "lastModifiedBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "parentReference": {
+                "id": "8e7ec6ff-ad65-4396-ba45-182b5c6df744",
+                "siteId": "tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482"
+            },
+            "contentType": {
+                "id": "0x010100DA0D4393244A8E4A876CEE23FCC24C12",
+                "name": "Document"
+            }
+        },
+        {
+            "@odata.etag": "\"407991cf-2954-4116-8357-5000bbc1dbe8,2\"",
+            "createdDateTime": "2022-05-31T22:06:52Z",
+            "eTag": "\"407991cf-2954-4116-8357-5000bbc1dbe8,2\"",
+            "id": "8",
+            "lastModifiedDateTime": "2022-05-31T22:06:52Z",
+            "webUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/Shared%20Documents/Old_ECI-Yes_Juris_ITAR_Class_XId_Release_Yes_RelAuth_TA12345-01.docx",
+            "createdBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "lastModifiedBy": {
+                "user": {
+                    "email": "krishna.prasad@tcengine.com",
+                    "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                    "displayName": "Krishna Prasad"
+                }
+            },
+            "parentReference": {
+                "id": "8e7ec6ff-ad65-4396-ba45-182b5c6df744",
+                "siteId": "tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482"
+            },
+            "contentType": {
+                "id": "0x010100DA0D4393244A8E4A876CEE23FCC24C12",
+                "name": "Document"
+            }
+        }
+    ]
+}

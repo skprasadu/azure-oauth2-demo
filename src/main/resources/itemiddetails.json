@@ -1,0 +1,115 @@
+{
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('tradecollaborationengine.sharepoint.com%2C851fe44e-f427-4478-bbf2-17451f4fe782%2C799be97d-8a9e-420a-a985-b461f43bb482')/lists('29bbaa17-b9ab-4695-a794-a671921894a0')/items('6')/driveItem(listItem())/$entity",
+    "@microsoft.graph.downloadUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/_layouts/15/download.aspx?UniqueId=561368cc-cc14-4fc6-942b-b8c41446c4c6&Translate=false&tempauth=eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvdHJhZGVjb2xsYWJvcmF0aW9uZW5naW5lLnNoYXJlcG9pbnQuY29tQGRhNDI4OGYwLWQ3NjItNDk0ZC1hNWFjLTNmMjA4MDhkZDdjNCIsImlzcyI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMCIsIm5iZiI6IjE2NTU4NTA5OTAiLCJleHAiOiIxNjU1ODU0NTkwIiwiZW5kcG9pbnR1cmwiOiJoV1JPaUNFbE1COCtFN1hCamJXSFJWc09mcnVwL1M5Mzkwb0IvVCtiZDZ3PSIsImVuZHBvaW50dXJsTGVuZ3RoIjoiMTQ5IiwiaXNsb29wYmFjayI6IlRydWUiLCJjaWQiOiJZVEpoWkdZd09XSXRZell4T1MwMFpUWmpMVGhsTmpNdE9HRTNPREZpWmpjME56VXkiLCJ2ZXIiOiJoYXNoZWRwcm9vZnRva2VuIiwic2l0ZWlkIjoiT0RVeFptVTBOR1V0WmpReU55MDBORGM0TFdKaVpqSXRNVGMwTlRGbU5HWmxOemd5IiwiYXBwX2Rpc3BsYXluYW1lIjoiUG9zdG1hbiIsImdpdmVuX25hbWUiOiJLcmlzaG5hIiwiZmFtaWx5X25hbWUiOiJQcmFzYWQiLCJzaWduaW5fc3RhdGUiOiJbXCJrbXNpXCJdIiwiYXBwaWQiOiJhNDIyMThkYy1lYjQ4LTQwYjItODljNi03MmFjODBiODBkMjAiLCJ0aWQiOiJkYTQyODhmMC1kNzYyLTQ5NGQtYTVhYy0zZjIwODA4ZGQ3YzQiLCJ1cG4iOiJrcmlzaG5hLnByYXNhZEB0Y2VuZ2luZS5jb20iLCJwdWlkIjoiMTAwMzIwMDFGNjY2MzA5MyIsImNhY2hla2V5IjoiMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAxZjY2NjMwOTNAbGl2ZS5jb20iLCJzY3AiOiJhbGxmaWxlcy5yZWFkIGFsbGZpbGVzLndyaXRlIGFsbHNpdGVzLnJlYWQgYWxsc2l0ZXMud3JpdGUgYWxscHJvZmlsZXMucmVhZCBhbGxwcm9maWxlcy5yZWFkIiwidHQiOiIyIiwidXNlUGVyc2lzdGVudENvb2tpZSI6bnVsbCwiaXBhZGRyIjoiMjAuMTkwLjE1NC4xNjAifQ.OE1kN2hrS29pL1k5T0JaL1hZbDdRSVBueTNZM1BxdFdHTUp6Nk1taytjdz0&ApiVersion=2.0",
+    "createdDateTime": "2022-05-31T00:30:25Z",
+    "eTag": "\"{561368CC-CC14-4FC6-942B-B8C41446C4C6},4\"",
+    "id": "01BXWRSJOMNAJVMFGMYZHZIK5YYQKENRGG",
+    "lastModifiedDateTime": "2022-05-31T00:30:25Z",
+    "name": "Old_ECI-No.docx",
+    "webUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/_layouts/15/Doc.aspx?sourcedoc=%7B561368CC-CC14-4FC6-942B-B8C41446C4C6%7D&file=Old_ECI-No.docx&action=default&mobileredirect=true",
+    "cTag": "\"c:{561368CC-CC14-4FC6-942B-B8C41446C4C6},9\"",
+    "size": 68023,
+    "createdBy": {
+        "user": {
+            "email": "krishna.prasad@tcengine.com",
+            "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+            "displayName": "Krishna Prasad"
+        }
+    },
+    "lastModifiedBy": {
+        "user": {
+            "email": "krishna.prasad@tcengine.com",
+            "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+            "displayName": "Krishna Prasad"
+        }
+    },
+    "parentReference": {
+        "driveType": "documentLibrary",
+        "driveId": "b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg",
+        "id": "01BXWRSJN6Y2GOVW7725BZO354PWSELRRZ",
+        "path": "/drives/b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg/root:"
+    },
+    "file": {
+        "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "hashes": {
+            "quickXorHash": "HaxxQMgfeqZPOsFMN3rRkTpDaH0="
+        }
+    },
+    "fileSystemInfo": {
+        "createdDateTime": "2022-05-31T00:30:25Z",
+        "lastModifiedDateTime": "2022-05-31T00:30:25Z"
+    },
+    "shared": {
+        "scope": "users"
+    },
+    "listItem@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('tradecollaborationengine.sharepoint.com%2C851fe44e-f427-4478-bbf2-17451f4fe782%2C799be97d-8a9e-420a-a985-b461f43bb482')/lists('29bbaa17-b9ab-4695-a794-a671921894a0')/items('6')/driveItem/listItem/$entity",
+    "listItem": {
+        "@odata.etag": "\"561368cc-cc14-4fc6-942b-b8c41446c4c6,3\"",
+        "createdDateTime": "2022-05-31T00:30:25Z",
+        "eTag": "\"561368cc-cc14-4fc6-942b-b8c41446c4c6,3\"",
+        "id": "6",
+        "lastModifiedDateTime": "2022-05-31T00:30:25Z",
+        "webUrl": "https://tradecollaborationengine.sharepoint.com/sites/kp-team/Shared%20Documents/Old_ECI-No.docx",
+        "createdBy": {
+            "user": {
+                "email": "krishna.prasad@tcengine.com",
+                "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                "displayName": "Krishna Prasad"
+            }
+        },
+        "lastModifiedBy": {
+            "user": {
+                "email": "krishna.prasad@tcengine.com",
+                "id": "4661f830-12fc-4785-9da3-4cf278b9563f",
+                "displayName": "Krishna Prasad"
+            }
+        },
+        "parentReference": {
+            "id": "8e7ec6ff-ad65-4396-ba45-182b5c6df744",
+            "siteId": "tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482"
+        },
+        "contentType": {
+            "id": "0x010100DA0D4393244A8E4A876CEE23FCC24C12",
+            "name": "Document"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('tradecollaborationengine.sharepoint.com%2C851fe44e-f427-4478-bbf2-17451f4fe782%2C799be97d-8a9e-420a-a985-b461f43bb482')/lists('29bbaa17-b9ab-4695-a794-a671921894a0')/items('6')/driveItem/listItem/fields/$entity",
+        "fields": {
+            "@odata.etag": "\"561368cc-cc14-4fc6-942b-b8c41446c4c6,3\"",
+            "FileLeafRef": "Old_ECI-No.docx",
+            "PROPRIETARY": "No",
+            "ContainsCUI": "No",
+            "ContainsECI": "No",
+            "Designation": "Yes",
+            "HyperlinksChanged": true,
+            "LinksUpToDate": true,
+            "ScaleCrop": true,
+            "ShareDoc": true,
+            "TitusGUID": "622396a0-f372-4cd8-a4cf-bdda548a237a",
+            "VisualMark": "STD",
+            "id": "6",
+            "ContentType": "Document",
+            "Created": "2022-05-31T00:30:25Z",
+            "AuthorLookupId": "9",
+            "Modified": "2022-05-31T00:30:25Z",
+            "EditorLookupId": "9",
+            "_CheckinComment": "",
+            "LinkFilenameNoMenu": "Old_ECI-No.docx",
+            "LinkFilename": "Old_ECI-No.docx",
+            "DocIcon": "docx",
+            "FileSizeDisplay": "68023",
+            "ItemChildCount": "0",
+            "FolderChildCount": "0",
+            "_ComplianceFlags": "",
+            "_ComplianceTag": "",
+            "_ComplianceTagWrittenTime": "",
+            "_ComplianceTagUserId": "",
+            "_CommentCount": "",
+            "_LikeCount": "",
+            "_DisplayName": "",
+            "Edit": "0",
+            "_UIVersionString": "1.0",
+            "ParentVersionStringLookupId": "6",
+            "ParentLeafNameLookupId": "6"
+        }
+    }
+}
