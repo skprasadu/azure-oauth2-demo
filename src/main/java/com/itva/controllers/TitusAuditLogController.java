@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itva.model.TitusAttribute;
@@ -46,16 +47,22 @@ public class TitusAuditLogController {
 	private OAuth2AuthorizedClientService clientService;
 
 	@GetMapping("listTitusAuditLogs")
-	public List<TitusAttributes> listTitusAuditLogs() {		
+	public List<TitusAttributes> listTitusAuditLogs(@RequestParam("checkForChanges") Boolean checkForChanges) {		
 		logger.debug("******* In listTitusAuditLogs");
+		
+		if(checkForChanges) {
+			List<TitusDocument> tds = titusDocumentRepository.findAll();
+			List<TitusAttribute> taList = titusAttributeRepository.findAll();
+	
+			List<TitusAttributes> list = Util.convertToTitusAttributes(tds, taList);
+		
+			checkForNewViewsAndInsert(list);
+		}
 		
 		List<TitusDocument> tds = titusDocumentRepository.findAll();
 		List<TitusAttribute> taList = titusAttributeRepository.findAll();
 
 		List<TitusAttributes> list = Util.convertToTitusAttributes(tds, taList);
-		
-		checkForNewViewsAndInsert(list);
-		
 		Collections.sort(list, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()));
 
 		return list;
@@ -77,7 +84,7 @@ public class TitusAuditLogController {
 				}
 			}
 		}
-		System.out.println("********************");
+		logger.debug("********************");
 		//System.out.println("newViewedSet=" + newViewedSet);
 		
 		List<TitusAttributes> readList = list.stream().filter(x -> x.getAccessType().equals("READ")).collect(Collectors.toList());
@@ -87,11 +94,11 @@ public class TitusAuditLogController {
 			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName()));
 		}
 				
-		//System.out.println("********************");
-		//System.out.println("existingViewedSet=" + existingViewedSet);
+		logger.debug("********************");
+		logger.debug("existingViewedSet=" + existingViewedSet);
 		
 		for(ViewRecord vr: newViewedSet) {
-			System.out.println("VR=" + vr);
+			logger.debug("VR=" + vr);
 			if(!existingViewedSet.contains(vr)) {
 				titusDocumentRepository.save(new TitusDocument(vr.getFileName(), vr.getDisplayName(), "READ", vr.getActivityDateTime()));
 			}

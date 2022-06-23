@@ -15,25 +15,25 @@ export default function BasicTable() {
   const [data, setData] = useState([] );
   const [loading, setLoading] = useState(false);
 
-  async function fetchData() {
+  async function fetchData(checkForChanges) {
     // You can await here
     setLoading(true);
     const result = await axios(
       //'https://tc-func-app1.azurewebsites.net/api/listTitusAuditLogs',
-      '/api/listTitusAuditLogs',
+      '/api/listTitusAuditLogs?checkForChanges=' + checkForChanges,
     );
     setData(result.data);
     setLoading(false);
   }
 
   useEffect(() => {
-    fetchData();    
+    fetchData(false);    
   }, []);
 
   return (
     <>
       <IconButton color="primary" aria-label="upload picture" component="span" 
-        onClick={() => { fetchData(); }}>
+        onClick={() => { fetchData(true); }}>
             <RefreshIcon />
       </IconButton>
       {loading ? <CircularProgress size={14} /> : <TableContainer component={Paper}>
