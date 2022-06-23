@@ -26,4 +26,11 @@ public class TitusDocument {
 	private String userName;
 	private String accessType;
 	private Timestamp loggedTime;
+	
+	public TitusDocument(String documentName, String userName, String accessType, Timestamp loggedTime) {
+		this.documentName = documentName;
+		this.userName = userName;
+		this.accessType = accessType;
+		this.loggedTime = loggedTime;
+	}
 }

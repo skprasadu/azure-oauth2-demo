@@ -1,7 +1,13 @@
 package com.itva.controllers;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itva.model.TitusAttribute;
 import com.itva.model.TitusAttributes;
 import com.itva.model.TitusDocument;
+import com.itva.model.ViewRecord;
+import com.itva.model.activitiespayload.Activities;
 import com.itva.model.activitiespayload.VisitorsPayload;
 import com.itva.repositories.TitusAttributeRepository;
 import com.itva.repositories.TitusDocumentRepository;
@@ -46,16 +54,48 @@ public class TitusAuditLogController {
 
 		List<TitusAttributes> list = Util.convertToTitusAttributes(tds, taList);
 		
-		for(TitusAttributes t: list) {
-			VisitorsPayload visitorsPayload = Util.getItemIdDetails(t.getDocumentName(), getToken());
-			if(visitorsPayload != null) {
-				System.out.println("fileName=" + t.getDocumentName() + " visitorsPayload=" + visitorsPayload);
-			}
-		}
-
+		checkForNewViewsAndInsert(list);
+		
 		Collections.sort(list, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()));
 
 		return list;
+	}
+
+	private void checkForNewViewsAndInsert(List<TitusAttributes> list) {
+		Set<ViewRecord> newViewedSet = new HashSet<>();
+		String token = getToken();
+		
+		for(TitusAttributes t: list) {
+			VisitorsPayload visitorsPayload = Util.getItemIdDetails(t.getDocumentName(), token);
+			if(visitorsPayload != null) {
+				
+				for(Activities activities : visitorsPayload.getActivities()) {
+					DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+					LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
+					Timestamp ts = Timestamp.valueOf(localdatetime);
+					newViewedSet.add(new ViewRecord(t.getDocumentName(), ts, activities.getActor().getUser().getDisplayName()));
+				}
+			}
+		}
+		System.out.println("********************");
+		//System.out.println("newViewedSet=" + newViewedSet);
+		
+		List<TitusAttributes> readList = list.stream().filter(x -> x.getAccessType().equals("READ")).collect(Collectors.toList());
+		Set<ViewRecord> existingViewedSet = new HashSet<>();
+		
+		for(TitusAttributes t: readList) {
+			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName()));
+		}
+				
+		//System.out.println("********************");
+		//System.out.println("existingViewedSet=" + existingViewedSet);
+		
+		for(ViewRecord vr: newViewedSet) {
+			System.out.println("VR=" + vr);
+			if(!existingViewedSet.contains(vr)) {
+				titusDocumentRepository.save(new TitusDocument(vr.getFileName(), vr.getDisplayName(), "READ", vr.getActivityDateTime()));
+			}
+		}
 	}
 
 	private String getToken() {
