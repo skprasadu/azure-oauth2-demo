@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class VisitorsPayload {
 	private String id;
+	private String fileName;
 	private String aggregationInterval;
     private String startDateTime;
     private String endDateTime;

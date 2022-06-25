@@ -26,6 +26,8 @@ import com.itva.model.filecollection.FileCollection;
 import com.itva.model.filecollection.Value;
 import com.itva.model.itemiddetails.ItemIdDetails;
 
+import lombok.val;
+
 public class Util {
 	private static Logger logger = LoggerFactory.getLogger(Util.class);
 
@@ -83,7 +85,11 @@ public class Util {
 						+ propertyName.substring(1, propertyName.length());
 
 				try {
-					Method method = TitusAttributes.class.getMethod(methodName, String.class);
+					Class cls = String.class;
+					/*if(methodName.equals("setLoggedTime")) {
+						cls = Timestamp.class;
+					}*/
+					Method method = TitusAttributes.class.getMethod(methodName, cls);
 					method.invoke(tas, ta.getAttributeValue());
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 						| NoSuchMethodException e) {
@@ -98,49 +104,50 @@ public class Util {
 
 		return tasList;
 	}
-	
-	public static VisitorsPayload getItemIdDetails(String fileName, String token) {
+
+	public static ArrayList<VisitorsPayload> getItemIdDetails(String token) {
 		// TODO Auto-generated method stub
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer "+ token);
+		headers.set("Authorization", "Bearer " + token);
 		headers.set("Connection", "keep-alive");
 		headers.set("Content-type", "application/json");
-		
+
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 
 		String url1 = "https://graph.microsoft.com/v1.0/sites/tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482/lists/29bbaa17-b9ab-4695-a794-a671921894a0/items";
 		ResponseEntity<String> response = restTemplate.exchange(url1, HttpMethod.GET, entity, String.class);
 
-		//System.out.println(response.getBody());
+		// System.out.println(response.getBody());
 		FileCollection fileCollection = new Gson().fromJson(response.getBody(), FileCollection.class);
-		
-		Integer id = -1;
-		for(Value value :fileCollection.getValue()) {
-			if(value.getWebUrl().endsWith(fileName)) {
-				id = value.getId();
-				break;
-			}
-		}
-		
-		if(id != -1) {
-			String url2 = String.format("https://graph.microsoft.com/v1.0/sites/tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482/lists/29bbaa17-b9ab-4695-a794-a671921894a0/items/%d/driveItem?$expand=listItem", id);
-				
-			ResponseEntity<String> response1 = restTemplate.exchange(url2, HttpMethod.GET, entity, String.class);
 
-			//System.out.println(response1.getBody());
-			
-			ItemIdDetails itemIdDetails = new Gson().fromJson(response1.getBody(), ItemIdDetails.class);
-			
-			String url3 = String.format("https://graph.microsoft.com/v1.0/drives/b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg/items/%s/analytics/allTime?$expand=activities($filter=access ne null)", itemIdDetails.getId());
-			ResponseEntity<String> response2 = restTemplate.exchange(url3, HttpMethod.GET, entity, String.class);
-
-			//System.out.println(response1.getBody());
-			
-			VisitorsPayload visitorsPayload = new Gson().fromJson(response2.getBody(), VisitorsPayload.class);
-			return visitorsPayload;
-		}
-		return null;
-	}
+		val visitorsPayloadList = new ArrayList<VisitorsPayload>();
+		for (Value value : fileCollection.getValue()) {
+			String url2 = String.format(
+					"https://graph.microsoft.com/v1.0/sites/tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482/lists/29bbaa17-b9ab-4695-a794-a671921894a0/items/%d/driveItem?$expand=listItem",
+					value.getId());
 	
+			ResponseEntity<String> response1 = restTemplate.exchange(url2, HttpMethod.GET, entity, String.class);
+	
+			// System.out.println(response1.getBody());
+	
+			ItemIdDetails itemIdDetails = new Gson().fromJson(response1.getBody(), ItemIdDetails.class);
+	
+			String url3 = String.format(
+					"https://graph.microsoft.com/v1.0/drives/b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg/items/%s/analytics/allTime?$expand=activities($filter=access ne null)",
+					itemIdDetails.getId());
+			ResponseEntity<String> response2 = restTemplate.exchange(url3, HttpMethod.GET, entity, String.class);
+	
+			// System.out.println(response1.getBody());
+	
+			VisitorsPayload visitorsPayload = new Gson().fromJson(response2.getBody(), VisitorsPayload.class);
+			
+			String[] split = value.getWebUrl().split("/");
+			visitorsPayload.setFileName(split[split.length-1]);
+			visitorsPayloadList.add(visitorsPayload);
+			//if (value.getWebUrl().endsWith(fileName)) {
+			//}
+		}
+		return visitorsPayloadList;
+	}
 }

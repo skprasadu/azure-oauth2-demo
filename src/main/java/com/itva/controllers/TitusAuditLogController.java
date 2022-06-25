@@ -3,6 +3,7 @@ package com.itva.controllers;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,8 @@ import com.itva.model.activitiespayload.VisitorsPayload;
 import com.itva.repositories.TitusAttributeRepository;
 import com.itva.repositories.TitusDocumentRepository;
 import com.itva.util.Util;
+
+import lombok.val;
 
 @RestController
 @RequestMapping("/api")
@@ -63,7 +66,15 @@ public class TitusAuditLogController {
 		List<TitusAttribute> taList = titusAttributeRepository.findAll();
 
 		List<TitusAttributes> list = Util.convertToTitusAttributes(tds, taList);
-		Collections.sort(list, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()));
+		Collections.sort(list, (s1, s2) -> {
+			if(s1.getLoggedTime() == null) {
+				return 1;
+			} else if(s2.getLoggedTime() == null) {
+				return -1;
+			} else  {
+				return s2.getLoggedTime().compareTo(s1.getLoggedTime());
+			}
+		});
 
 		return list;
 	}
@@ -72,20 +83,17 @@ public class TitusAuditLogController {
 		Set<ViewRecord> newViewedSet = new HashSet<>();
 		String token = getToken();
 		
-		for(TitusAttributes t: list) {
-			VisitorsPayload visitorsPayload = Util.getItemIdDetails(t.getDocumentName(), token);
-			if(visitorsPayload != null) {
-				
-				for(Activities activities : visitorsPayload.getActivities()) {
-					DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-					LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
-					Timestamp ts = Timestamp.valueOf(localdatetime);
-					newViewedSet.add(new ViewRecord(t.getDocumentName(), ts, activities.getActor().getUser().getDisplayName()));
-				}
+		val visitorsPayloadList = Util.getItemIdDetails(token);
+		for(val visitorsPayload: visitorsPayloadList) {
+			for(Activities activities : visitorsPayload.getActivities()) {
+				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+				LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
+				Timestamp ts = Timestamp.valueOf(localdatetime);
+				newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName()));
 			}
 		}
+		System.out.println("newViewedSet=" + newViewedSet);
 		logger.debug("********************");
-		//System.out.println("newViewedSet=" + newViewedSet);
 		
 		List<TitusAttributes> readList = list.stream().filter(x -> x.getAccessType().equals("READ")).collect(Collectors.toList());
 		Set<ViewRecord> existingViewedSet = new HashSet<>();
