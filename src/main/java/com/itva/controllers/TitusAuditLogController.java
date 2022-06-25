@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -48,6 +49,15 @@ public class TitusAuditLogController {
 	
 	@Autowired
 	private OAuth2AuthorizedClientService clientService;
+	
+	@Value("${tc.site-id}")
+	private String tcSiteId;
+
+	@Value("${tc.shared-document-list-id}")
+	private String tcSharedDocumentListId;
+	
+	@Value("${tc.shared-document-drive-id}")
+	private String tcSharedDocumentDriveId;
 
 	@GetMapping("listTitusAuditLogs")
 	public List<TitusAttributes> listTitusAuditLogs(@RequestParam("checkForChanges") Boolean checkForChanges) {		
@@ -83,7 +93,8 @@ public class TitusAuditLogController {
 		Set<ViewRecord> newViewedSet = new HashSet<>();
 		String token = getToken();
 		
-		val visitorsPayloadList = Util.getItemIdDetails(token);
+		val visitorsPayloadList = Util.getItemIdDetails(tcSiteId, tcSharedDocumentListId, tcSharedDocumentDriveId, token);
+		
 		for(val visitorsPayload: visitorsPayloadList) {
 			for(Activities activities : visitorsPayload.getActivities()) {
 				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");

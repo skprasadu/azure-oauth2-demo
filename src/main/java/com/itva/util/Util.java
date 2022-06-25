@@ -105,7 +105,7 @@ public class Util {
 		return tasList;
 	}
 
-	public static ArrayList<VisitorsPayload> getItemIdDetails(String token) {
+	public static ArrayList<VisitorsPayload> getItemIdDetails(String tcSiteId, String tcSharedDocumentListId, String tcSharedDocumentDriveId, String token) {
 		// TODO Auto-generated method stub
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -115,7 +115,7 @@ public class Util {
 
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 
-		String url1 = "https://graph.microsoft.com/v1.0/sites/tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482/lists/29bbaa17-b9ab-4695-a794-a671921894a0/items";
+		String url1 = String.format("https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items", tcSiteId, tcSharedDocumentListId);
 		ResponseEntity<String> response = restTemplate.exchange(url1, HttpMethod.GET, entity, String.class);
 
 		// System.out.println(response.getBody());
@@ -124,8 +124,8 @@ public class Util {
 		val visitorsPayloadList = new ArrayList<VisitorsPayload>();
 		for (Value value : fileCollection.getValue()) {
 			String url2 = String.format(
-					"https://graph.microsoft.com/v1.0/sites/tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482/lists/29bbaa17-b9ab-4695-a794-a671921894a0/items/%d/driveItem?$expand=listItem",
-					value.getId());
+					"https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items/%d/driveItem?$expand=listItem",
+					tcSiteId, tcSharedDocumentListId, value.getId());
 	
 			ResponseEntity<String> response1 = restTemplate.exchange(url2, HttpMethod.GET, entity, String.class);
 	
@@ -134,8 +134,8 @@ public class Util {
 			ItemIdDetails itemIdDetails = new Gson().fromJson(response1.getBody(), ItemIdDetails.class);
 	
 			String url3 = String.format(
-					"https://graph.microsoft.com/v1.0/drives/b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg/items/%s/analytics/allTime?$expand=activities($filter=access ne null)",
-					itemIdDetails.getId());
+					"https://graph.microsoft.com/v1.0/drives/%s/items/%s/analytics/allTime?$expand=activities($filter=access ne null)",
+					tcSharedDocumentDriveId, itemIdDetails.getId());
 			ResponseEntity<String> response2 = restTemplate.exchange(url3, HttpMethod.GET, entity, String.class);
 	
 			// System.out.println(response1.getBody());
@@ -145,8 +145,6 @@ public class Util {
 			String[] split = value.getWebUrl().split("/");
 			visitorsPayload.setFileName(split[split.length-1]);
 			visitorsPayloadList.add(visitorsPayload);
-			//if (value.getWebUrl().endsWith(fileName)) {
-			//}
 		}
 		return visitorsPayloadList;
 	}

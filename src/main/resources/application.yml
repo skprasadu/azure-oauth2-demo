@@ -33,3 +33,9 @@ azure:
     
 server:
   forward-headers-strategy: native
+  
+tc:
+  site-id: tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482
+  shared-document-list-id: 29bbaa17-b9ab-4695-a794-a671921894a0
+  shared-document-drive-id: b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg
+  

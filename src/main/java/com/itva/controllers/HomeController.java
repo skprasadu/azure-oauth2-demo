@@ -5,7 +5,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,14 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.itva.model.activitiespayload.VisitorsPayload;
-import com.itva.util.Util;
-
 @RestController
 public class HomeController {
 	@Autowired
 	private OAuth2AuthorizedClientService clientService;
-
+	
 	@GetMapping("home")
 	public String home(@AuthenticationPrincipal(expression = "claims['name']") String name) {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
