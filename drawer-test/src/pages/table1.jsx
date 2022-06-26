@@ -20,7 +20,7 @@ export default function BasicTable() {
     setLoading(true);
     const result = await axios(
       //'https://tc-func-app1.azurewebsites.net/api/listTitusAuditLogs',
-      '/api/listTitusAuditLogs2?checkForChanges=' + checkForChanges,
+      '/api/listTitusAuditLogs?checkForChanges=' + checkForChanges,
     );
     setData(result.data);
     setLoading(false);
@@ -43,18 +43,18 @@ export default function BasicTable() {
               <TableCell>Document Name</TableCell>
               <TableCell align="right">User Name</TableCell>
               <TableCell align="right">Access Type</TableCell>
-              <TableCell align="right">ECI</TableCell>
-              <TableCell align="right">ECICoC</TableCell>
-              <TableCell align="right">ECI Juris</TableCell>
-              <TableCell align="right">ECI Class</TableCell>
-              <TableCell align="right">Export</TableCell>
-              <TableCell align="right">Ex Auth</TableCell>
+              <TableCell align="right">App Version</TableCell>
               <TableCell align="right">Contains CUI</TableCell>
-              <TableCell align="right">CUI</TableCell>
-              <TableCell align="right">Dissemination</TableCell>
-              <TableCell align="right">Proprietary</TableCell>
-              <TableCell align="right">Proprietary Type</TableCell>
-              <TableCell align="right">Proprietary Statement</TableCell>
+              <TableCell>Contains ECI</TableCell>
+              <TableCell align="right">Designation</TableCell>
+              <TableCell align="right">Doc Security</TableCell>
+              <TableCell align="right">Hyperlinks Changed</TableCell>
+              <TableCell align="right">Links Up To Date</TableCell>
+              <TableCell>Proprietary</TableCell>
+              <TableCell align="right">Scale Crop</TableCell>
+              <TableCell align="right">Share Doc</TableCell>
+              <TableCell align="right">Titus GUID</TableCell>
+              <TableCell align="right">Visual Mark</TableCell>
               <TableCell align="right">Logged Time</TableCell>
             </TableRow>
           </TableHead>
@@ -69,18 +69,18 @@ export default function BasicTable() {
                 </TableCell>
                 <TableCell align="right">{row.userName}</TableCell>
                 <TableCell align="right">{row.accessType}</TableCell>
-                <TableCell align="right">{row.eci}</TableCell>
-                <TableCell align="right">{row.eciCoC}</TableCell>
-                <TableCell align="right">{row.eciJuris}</TableCell>
-                <TableCell align="right">{row.eciClass}</TableCell>
-                <TableCell align="right">{row.export}</TableCell>
-                <TableCell align="right">{row.exAuth}</TableCell>
+                <TableCell align="right">{row.appVersion}</TableCell>
                 <TableCell align="right">{row.containsCUI}</TableCell>
-                <TableCell align="right">{row.cui}</TableCell>
-                <TableCell align="right">{row.dissemination}</TableCell>
+                <TableCell align="right">{row.containsECI}</TableCell>
+                <TableCell align="right">{row.designation}</TableCell>
+                <TableCell align="right">{row.docSecurity}</TableCell>
+                <TableCell align="right">{row.hyperlinksChanged}</TableCell>
+                <TableCell align="right">{row.linksUpToDate}</TableCell>
                 <TableCell align="right">{row.proprietary}</TableCell>
-                <TableCell align="right">{row.proprietaryType}</TableCell>
-                <TableCell align="right">{row.proprietaryStatement}</TableCell>
+                <TableCell align="right">{row.scaleCrop}</TableCell>
+                <TableCell align="right">{row.shareDoc}</TableCell>
+                <TableCell align="right">{row.titusGUID}</TableCell>
+                <TableCell align="right">{row.visualMark}</TableCell>
                 <TableCell align="right">{row.loggedTime}</TableCell>
               </TableRow>
             ))}

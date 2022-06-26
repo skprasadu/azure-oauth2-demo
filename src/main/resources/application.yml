@@ -34,8 +34,12 @@ azure:
 server:
   forward-headers-strategy: native
   
+#tc:
+#  site-id: tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482
+#  shared-document-list-id: 29bbaa17-b9ab-4695-a794-a671921894a0
+#  shared-document-drive-id: b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg
 tc:
-  site-id: tradecollaborationengine.sharepoint.com,851fe44e-f427-4478-bbf2-17451f4fe782,799be97d-8a9e-420a-a985-b461f43bb482
-  shared-document-list-id: 29bbaa17-b9ab-4695-a794-a671921894a0
-  shared-document-drive-id: b!TuQfhSf0eES78hdFH0_ngn3pm3meigpCqYW0YfQ7tIIXqrspq7mVRqeUpnGSGJSg
+  site-id: tradecollaborationengine.sharepoint.com,2851eb6a-45a6-4b82-add9-d184ae5b2bc1,a641e430-e5dc-4251-a3d9-a6b37f02e6b1
+  shared-document-list-id: 90983c8d-05af-4b64-939c-ff49cca1660d
+  shared-document-drive-id: b!autRKKZFgkut2dGErlsrwTDkQabc5VFCo9mms38C5rGNPJiQrwVkS5Oc_0nMoWYN
   
