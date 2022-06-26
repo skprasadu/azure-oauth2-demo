@@ -82,11 +82,13 @@ public class TitusAuditLogController2 {
 		val visitorsPayloadList = Util.getItemIdDetails(tcSiteId, tcSharedDocumentListId, tcSharedDocumentDriveId, token);
 		
 		for(val visitorsPayload: visitorsPayloadList) {
-			for(Activities activities : visitorsPayload.getActivities()) {
-				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-				LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
-				Timestamp ts = Timestamp.valueOf(localdatetime);
-				newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName()));
+			if(visitorsPayload.getActivities() != null) {
+				for(Activities activities : visitorsPayload.getActivities()) {
+					DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+					LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
+					Timestamp ts = Timestamp.valueOf(localdatetime);
+					newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName()));
+				}
 			}
 		}
 		System.out.println("newViewedSet=" + newViewedSet);
