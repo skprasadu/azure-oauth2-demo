@@ -113,16 +113,18 @@ public class Util {
 		headers.set("Connection", "keep-alive");
 		headers.set("Content-type", "application/json");
 
-		HttpEntity<String> entity = new HttpEntity<>(headers);
+		val entity = new HttpEntity<String>(headers);
 
-		String url1 = String.format("https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items", tcSiteId, tcSharedDocumentListId);
-		ResponseEntity<String> response = restTemplate.exchange(url1, HttpMethod.GET, entity, String.class);
+		String url1 = String.format("https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items?expand=fields", tcSiteId, tcSharedDocumentListId);
+		val response = restTemplate.exchange(url1, HttpMethod.GET, entity, String.class);
 
 		// System.out.println(response.getBody());
 		FileCollection fileCollection = new Gson().fromJson(response.getBody(), FileCollection.class);
+		
 
 		val visitorsPayloadList = new ArrayList<VisitorsPayload>();
 		for (Value value : fileCollection.getValue()) {
+			System.out.println("map=" + value.getFields());
 			String url2 = String.format(
 					"https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items/%d/driveItem?$expand=listItem",
 					tcSiteId, tcSharedDocumentListId, value.getId());
@@ -144,6 +146,7 @@ public class Util {
 			
 			String[] split = value.getWebUrl().split("/");
 			visitorsPayload.setFileName(split[split.length-1]);
+			visitorsPayload.setFields(value.getFields());
 			visitorsPayloadList.add(visitorsPayload);
 		}
 		return visitorsPayloadList;

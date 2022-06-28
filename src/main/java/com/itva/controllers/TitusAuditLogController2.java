@@ -23,13 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itva.model.TitusAttribute;
-import com.itva.model.TitusAttributes;
-import com.itva.model.TitusDocument;
 import com.itva.model.TitusDocument2;
 import com.itva.model.ViewRecord;
 import com.itva.model.activitiespayload.Activities;
-import com.itva.repositories.TitusAttributeRepository;
 import com.itva.repositories.TitusDocument2Repository;
 import com.itva.util.Util;
 
@@ -43,9 +39,6 @@ public class TitusAuditLogController2 {
 	@Autowired
 	private TitusDocument2Repository titusDocument2Repository;
 
-	@Autowired
-	private TitusAttributeRepository titusAttributeRepository;
-	
 	@Autowired
 	private OAuth2AuthorizedClientService clientService;
 	
@@ -63,12 +56,12 @@ public class TitusAuditLogController2 {
 		logger.debug("******* In listTitusAuditLogs");
 		
 		if(checkForChanges) {
-			List<TitusDocument2> tds = titusDocument2Repository.findAll();
+			val tds = titusDocument2Repository.findAll();
 		
 			checkForNewViewsAndInsert(tds);
 		}
 		
-		List<TitusDocument2> tds = titusDocument2Repository.findAll();
+		val tds = titusDocument2Repository.findAll();
 
 		Collections.sort(tds, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()) );
 
@@ -76,7 +69,7 @@ public class TitusAuditLogController2 {
 	}
 
 	private void checkForNewViewsAndInsert(List<TitusDocument2> list) {
-		Set<ViewRecord> newViewedSet = new HashSet<>();
+		val newViewedSet = new HashSet<ViewRecord>();
 		String token = getToken();
 		
 		val visitorsPayloadList = Util.getItemIdDetails(tcSiteId, tcSharedDocumentListId, tcSharedDocumentDriveId, token);
@@ -87,18 +80,18 @@ public class TitusAuditLogController2 {
 					DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 					LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
 					Timestamp ts = Timestamp.valueOf(localdatetime);
-					newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName()));
+					newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName(), visitorsPayload.getFields()));
 				}
 			}
 		}
 		System.out.println("newViewedSet=" + newViewedSet);
 		logger.debug("********************");
 		
-		List<TitusDocument2> readList = list.stream().filter(x -> x.getAccessType().equals("READ")).collect(Collectors.toList());
-		Set<ViewRecord> existingViewedSet = new HashSet<>();
+		val readList = list.stream().filter(x -> x.getAccessType().equals("READ")).collect(Collectors.toList());
+		val existingViewedSet = new HashSet<ViewRecord>();
 		
 		for(TitusDocument2 t: readList) {
-			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName()));
+			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName(), null));
 		}
 				
 		logger.debug("********************");

@@ -100,7 +100,7 @@ public class TitusAuditLogController {
 				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 				LocalDateTime localdatetime = LocalDateTime.parse(activities.getActivityDateTime(), format);
 				Timestamp ts = Timestamp.valueOf(localdatetime);
-				newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName()));
+				newViewedSet.add(new ViewRecord(visitorsPayload.getFileName(), ts, activities.getActor().getUser().getDisplayName(), visitorsPayload.getFields()));
 			}
 		}
 		System.out.println("newViewedSet=" + newViewedSet);
@@ -110,7 +110,7 @@ public class TitusAuditLogController {
 		Set<ViewRecord> existingViewedSet = new HashSet<>();
 		
 		for(TitusAttributes t: readList) {
-			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName()));
+			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName(), null));
 		}
 				
 		logger.debug("********************");

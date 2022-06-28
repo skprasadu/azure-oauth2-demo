@@ -1,6 +1,7 @@
 package com.itva.model.activitiespayload;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import lombok.Data;
 
@@ -15,4 +16,6 @@ public class VisitorsPayload {
     
     private Access access;
     private ArrayList<Activities> activities;
+	private Map<String, String> fields;
+
 }
