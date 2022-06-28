@@ -97,6 +97,8 @@ public class TitusAuditLogController2 {
 		logger.debug("********************");
 		logger.debug("existingViewedSet=" + existingViewedSet);
 		
+//{@odata.etag="51f64d53-41ef-4942-939e-4b779b4be83a,1", FileLeafRef=53122-3.docx, ECI=Yes, ECICoC=US, ECIJuris=ITAR, ECIClass=XI(d), Export=YES, 
+//ExAuth=TA12345-01, ContainsCUI=Yes, CUI=SP-CTI;SP-EXPT, Dissemination=DISPLAYONLY, PROPRIETARY=No, id=15, ContentType=Document, Created=2022-06-26T20:39:57Z, AuthorLookupId=6, Modified=2022-06-26T20:39:57Z, EditorLookupId=6, _CheckinComment=, LinkFilenameNoMenu=53122-3.docx, LinkFilename=53122-3.docx, DocIcon=docx, FileSizeDisplay=25919, ItemChildCount=0, FolderChildCount=0, _ComplianceFlags=, _ComplianceTag=, _ComplianceTagWrittenTime=, _ComplianceTagUserId=, _CommentCount=, _LikeCount=, _DisplayName=, Edit=0, _UIVersionString=1.0, ParentVersionStringLookupId=15, ParentLeafNameLookupId=15}
 		for(ViewRecord vr: newViewedSet) {
 			logger.debug("VR=" + vr);
 			if(!existingViewedSet.contains(vr)) {
@@ -104,6 +106,18 @@ public class TitusAuditLogController2 {
 						.documentName(vr.getFileName())
 						.userName(vr.getDisplayName())
 						.accessType("READ")
+						.eci(vr.getFields().get("ECI"))
+						.eciCoC(vr.getFields().get("ECICoC"))
+						.eciJuris(vr.getFields().get("ECIJuris"))
+						.eciClass(vr.getFields().get("ECIClass"))
+						.export(vr.getFields().get("Export"))
+						.exAuth(vr.getFields().get("ExAuth"))
+						.containsCUI(vr.getFields().get("ContainsCUI"))
+						.cui(vr.getFields().get("CUI"))
+						.dissemination(vr.getFields().get("Dissemination"))
+						.proprietary(vr.getFields().get("PROPRIETARY"))
+						.proprietaryType(vr.getFields().get("ProprietaryType"))
+						.proprietaryStatement(vr.getFields().get("ProprietaryStatement"))
 						.loggedTime( vr.getActivityDateTime()).build());
 			}
 		}
