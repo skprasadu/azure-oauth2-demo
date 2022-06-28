@@ -128,6 +128,15 @@ export default function MiniDrawer() {
             >
               <MenuIcon />
             </IconButton>
+
+            <Box
+              component="img"
+              sx={{
+                height: 64,
+              }}
+              alt="Your logo."
+              src="/TCE_Retina_2x.png"
+            />
             <Typography variant="h6" noWrap component="div">
               Titus Document Monitor
             </Typography>
