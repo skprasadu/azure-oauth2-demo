@@ -124,7 +124,7 @@ public class Util {
 
 		val visitorsPayloadList = new ArrayList<VisitorsPayload>();
 		for (Value value : fileCollection.getValue()) {
-			System.out.println("map=" + value.getFields());
+			//System.out.println("map=" + value.getFields());
 			String url2 = String.format(
 					"https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items/%d/driveItem?$expand=listItem",
 					tcSiteId, tcSharedDocumentListId, value.getId());

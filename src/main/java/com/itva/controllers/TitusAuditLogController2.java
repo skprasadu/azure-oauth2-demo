@@ -1,5 +1,8 @@
 package com.itva.controllers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,7 +55,7 @@ public class TitusAuditLogController2 {
 	private String tcSharedDocumentDriveId;
 
 	@GetMapping("listTitusAuditLogs2")
-	public List<TitusDocument2> listTitusAuditLogs(@RequestParam("checkForChanges") Boolean checkForChanges) {		
+	public List<TitusDocument2> listTitusAuditLogs(@RequestParam("checkForChanges") Boolean checkForChanges) throws UnsupportedEncodingException {		
 		logger.debug("******* In listTitusAuditLogs");
 		
 		if(checkForChanges) {
@@ -64,7 +67,12 @@ public class TitusAuditLogController2 {
 		val tds = titusDocument2Repository.findAll();
 
 		Collections.sort(tds, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()) );
+		
+		for(TitusDocument2 td: tds) {
+			td.setDocumentName(URLDecoder.decode(td.getDocumentName(), "UTF-8"));
+		}
 
+		logger.debug("completed it");
 		return tds;
 	}
 
@@ -84,13 +92,13 @@ public class TitusAuditLogController2 {
 				}
 			}
 		}
-		System.out.println("newViewedSet=" + newViewedSet);
+		//System.out.println("newViewedSet=" + newViewedSet);
 		logger.debug("********************");
 		
 		val readList = list.stream().filter(x -> x.getAccessType().equals("READ")).collect(Collectors.toList());
 		val existingViewedSet = new HashSet<ViewRecord>();
 		
-		for(TitusDocument2 t: readList) {
+		for(val t: readList) {
 			existingViewedSet.add(new ViewRecord( t.getDocumentName(), t.getLoggedTime(), t.getUserName(), null));
 		}
 				
@@ -99,7 +107,7 @@ public class TitusAuditLogController2 {
 		
 //{@odata.etag="51f64d53-41ef-4942-939e-4b779b4be83a,1", FileLeafRef=53122-3.docx, ECI=Yes, ECICoC=US, ECIJuris=ITAR, ECIClass=XI(d), Export=YES, 
 //ExAuth=TA12345-01, ContainsCUI=Yes, CUI=SP-CTI;SP-EXPT, Dissemination=DISPLAYONLY, PROPRIETARY=No, id=15, ContentType=Document, Created=2022-06-26T20:39:57Z, AuthorLookupId=6, Modified=2022-06-26T20:39:57Z, EditorLookupId=6, _CheckinComment=, LinkFilenameNoMenu=53122-3.docx, LinkFilename=53122-3.docx, DocIcon=docx, FileSizeDisplay=25919, ItemChildCount=0, FolderChildCount=0, _ComplianceFlags=, _ComplianceTag=, _ComplianceTagWrittenTime=, _ComplianceTagUserId=, _CommentCount=, _LikeCount=, _DisplayName=, Edit=0, _UIVersionString=1.0, ParentVersionStringLookupId=15, ParentLeafNameLookupId=15}
-		for(ViewRecord vr: newViewedSet) {
+		for(val vr: newViewedSet) {
 			logger.debug("VR=" + vr);
 			if(!existingViewedSet.contains(vr)) {
 				titusDocument2Repository.save(TitusDocument2.builder()
@@ -118,7 +126,7 @@ public class TitusAuditLogController2 {
 						.proprietary(vr.getFields().get("PROPRIETARY"))
 						.proprietaryType(vr.getFields().get("ProprietaryType"))
 						.proprietaryStatement(vr.getFields().get("ProprietaryStatement"))
-						.loggedTime( vr.getActivityDateTime()).build());
+						.loggedTime(vr.getActivityDateTime()).build());
 			}
 		}
 	}
