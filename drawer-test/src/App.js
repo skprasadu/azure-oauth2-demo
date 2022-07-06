@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { styled, 
-  useTheme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
-import {
-    BrowserRouter as Router,
-    Routes, Route, Link
-  } from "react-router-dom";
-  
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 
-import { Box, 
+import {
+  Box,
   Toolbar,
   List,
   CssBaseline,
@@ -20,16 +17,17 @@ import { Box,
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText } from '@mui/material';
+  ListItemText,
+} from '@mui/material';
 
-import InboxIcon from '@mui/icons-material/Inbox'; 
+import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import Dashboard from "./pages/dashboard";
-import Table from "./pages/table";
+import Dashboard from './pages/dashboard';
+import Table from './pages/table';
 
 const drawerWidth = 240;
 
@@ -81,22 +79,22 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme),
   }),
-);
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme),
+  }),
+}));
 
 export default function MiniDrawer() {
   const theme = useTheme();
@@ -138,20 +136,27 @@ export default function MiniDrawer() {
               src="/TCE_Retina_2x.png"
             />
             <Typography variant="h6" noWrap component="div">
-              Titus Document Monitor
+              Document Monitor
             </Typography>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              {theme.direction === 'rtl' ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
             </IconButton>
           </DrawerHeader>
           <Divider />
           <List>
             {['dashboard', 'table'].map((text, index) => (
-              <Link to={text} style={{ textDecoration: 'none', color: 'black' }}>
+              <Link
+                to={text}
+                style={{ textDecoration: 'none', color: 'black' }}
+              >
                 <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                   <ListItemButton
                     sx={{
@@ -169,7 +174,10 @@ export default function MiniDrawer() {
                     >
                       {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                     </ListItemIcon>
-                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                    <ListItemText
+                      primary={text}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
                   </ListItemButton>
                 </ListItem>
               </Link>
@@ -180,9 +188,9 @@ export default function MiniDrawer() {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <Routes>
-            <Route exact path="/" element={<Dashboard />}/>
-            <Route exact path="/dashboard" element={<Dashboard />}/>
-            <Route exact path="/table" element={<Table />}/>
+            <Route exact path="/" element={<Dashboard />} />
+            <Route exact path="/dashboard" element={<Dashboard />} />
+            <Route exact path="/table" element={<Table />} />
           </Routes>
         </Box>
       </Box>
