@@ -118,7 +118,7 @@ public class Util {
 		String url1 = String.format("https://graph.microsoft.com/v1.0/sites/%s/lists/%s/items?expand=fields", tcSiteId, tcSharedDocumentListId);
 		val response = restTemplate.exchange(url1, HttpMethod.GET, entity, String.class);
 
-		System.out.println(response.getBody());
+		//System.out.println(response.getBody());
 		FileCollection fileCollection = new Gson().fromJson(response.getBody(), FileCollection.class);
 		
 
