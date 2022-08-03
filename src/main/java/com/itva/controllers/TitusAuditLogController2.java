@@ -114,21 +114,25 @@ public class TitusAuditLogController2 {
 						.documentName(vr.getFileName())
 						.userName(vr.getDisplayName())
 						.accessType("READ")
-						.eci(vr.getFields().get("ECI").toString())
-						.eciCoC(vr.getFields().get("ECICoC").toString())
-						.eciJuris(vr.getFields().get("ECIJuris").toString())
-						.eciClass(vr.getFields().get("ECIClass").toString())
-						.export(vr.getFields().get("Export").toString())
-						.exAuth(vr.getFields().get("ExAuth").toString())
-						.containsCUI(vr.getFields().get("ContainsCUI").toString())
-						.cui(vr.getFields().get("CUI").toString())
-						.dissemination(vr.getFields().get("Dissemination").toString())
-						.proprietary(vr.getFields().get("PROPRIETARY").toString())
-						.proprietaryType(vr.getFields().get("ProprietaryType").toString())
-						.proprietaryStatement(vr.getFields().get("ProprietaryStatement").toString())
+						.eci(getValue(vr.getFields().get("ECI")))
+						.eciCoC(getValue(vr.getFields().get("ECICoC")))
+						.eciJuris(getValue(vr.getFields().get("ECIJuris")))
+						.eciClass(getValue(vr.getFields().get("ECIClass")))
+						.export(getValue(vr.getFields().get("Export")))
+						.exAuth(getValue(vr.getFields().get("ExAuth")))
+						.containsCUI(getValue(vr.getFields().get("ContainsCUI")))
+						.cui(getValue(vr.getFields().get("CUI")))
+						.dissemination(getValue(vr.getFields().get("Dissemination")))
+						.proprietary(getValue(vr.getFields().get("PROPRIETARY")))
+						.proprietaryType(getValue(vr.getFields().get("ProprietaryType") ))
+						.proprietaryStatement(getValue(vr.getFields().get("ProprietaryStatement")))
 						.loggedTime(vr.getActivityDateTime()).build());
 			}
 		}
+	}
+	
+	private static String getValue(Object obj) {
+		return obj != null ? obj.toString() : "";
 	}
 
 	private String getToken() {

@@ -20,12 +20,15 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        #dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
   datasource:
-    url: jdbc:mysql://kp-tc-mysql.mysql.database.azure.com:3306/tc_db?useSSL=true
+    #url: jdbc:mysql://kp-tc-mysql.mysql.database.azure.com:3306/tc_db?useSSL=true
+    url: jdbc:sqlserver://kp-svr.database.windows.net;databaseName=kp-tc-db
     username: kp_admin
     password: Pass@123
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     
 azure:
   application-insights:
