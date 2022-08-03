@@ -16,6 +16,6 @@ public class VisitorsPayload {
     
     private Access access;
     private ArrayList<Activities> activities;
-	private Map<String, String> fields;
+	private Map<String, Object> fields;
 
 }

@@ -8,6 +8,6 @@ import lombok.Data;
 public class Value {
 	private Integer id;
 	private String webUrl;
-	private Map<String, String> fields;
+	private Map<String, Object> fields;
 
 }

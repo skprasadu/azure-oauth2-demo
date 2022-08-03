@@ -16,6 +16,6 @@ public class ViewRecord {
 	private String displayName;
 	
 	@EqualsAndHashCode.Exclude
-	private Map<String, String> fields;
+	private Map<String, Object> fields;
 
 }
