@@ -22,6 +22,7 @@ public class TitusDocument2 {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	private String siteFullPath;
 	private String documentName;
 	private String userName;
 	private String accessType;
