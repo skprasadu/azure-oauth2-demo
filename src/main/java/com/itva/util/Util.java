@@ -15,12 +15,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.itva.model.AuditLog;
 import com.itva.model.TitusAttribute;
 import com.itva.model.TitusAttributes;
 import com.itva.model.TitusDocument;
+import com.itva.model.TitusDocument2;
 import com.itva.model.activitiespayload.VisitorsPayload;
 import com.itva.model.filecollection.FileCollection;
 import com.itva.model.filecollection.Value;
@@ -150,5 +154,14 @@ public class Util {
 			visitorsPayloadList.add(visitorsPayload);
 		}
 		return visitorsPayloadList;
+	}
+
+	public static void checkNewDownloads(JdbcTemplate jdbcTemplate, List<TitusDocument2> tds) {
+		String sql = "SELECT * FROM AuditLog";
+
+        List<AuditLog> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper(AuditLog.class));
+        
+        //System.out.println(list);
+
 	}
 }

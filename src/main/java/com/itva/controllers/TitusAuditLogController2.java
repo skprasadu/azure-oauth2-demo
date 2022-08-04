@@ -2,20 +2,19 @@ package com.itva.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -53,6 +52,9 @@ public class TitusAuditLogController2 {
 	
 	@Value("${tc.shared-document-drive-id}")
 	private String tcSharedDocumentDriveId;
+	
+	@Autowired
+	private JdbcTemplate template;
 
 	@GetMapping("listTitusAuditLogs2")
 	public List<TitusDocument2> listTitusAuditLogs(@RequestParam("checkForChanges") Boolean checkForChanges) throws UnsupportedEncodingException {		
@@ -62,10 +64,11 @@ public class TitusAuditLogController2 {
 			val tds = titusDocument2Repository.findAll();
 		
 			checkForNewViewsAndInsert(tds);
+			Util.checkNewDownloads(template, tds);
 		}
 		
 		val tds = titusDocument2Repository.findAll();
-
+		
 		Collections.sort(tds, (s1, s2) -> s2.getLoggedTime().compareTo(s1.getLoggedTime()) );
 		
 		for(TitusDocument2 td: tds) {
