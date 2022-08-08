@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ import com.itva.model.TitusAttribute;
 import com.itva.model.TitusAttributes;
 import com.itva.model.TitusDocument;
 import com.itva.model.TitusDocument2;
+import com.itva.model.ViewRecord;
 import com.itva.model.activitiespayload.VisitorsPayload;
 import com.itva.model.filecollection.FileCollection;
 import com.itva.model.filecollection.Value;
@@ -156,12 +158,34 @@ public class Util {
 		return visitorsPayloadList;
 	}
 
-	public static void checkNewDownloads(JdbcTemplate jdbcTemplate, List<TitusDocument2> tds) {
-		String sql = "SELECT * FROM AuditLog";
+	public static void checkNewDownloads(JdbcTemplate jdbcTemplate, List<TitusDocument2> tds, String siteUrl) {
+		String sql = "SELECT * FROM AuditLog where siteUrl=?";
 
-        List<AuditLog> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper(AuditLog.class));
+        List<AuditLog> list = jdbcTemplate.query(sql, new Object[] {siteUrl}, new BeanPropertyRowMapper(AuditLog.class));
         
-        //System.out.println(list);
+        val currentDownLoadSet = new HashSet<ViewRecord>();
+        
+        for(TitusDocument2 td: tds) {
+        	//Load in the second set
+        }
+        
+        val newDownLoadSet = new HashSet<ViewRecord>();
+        for(AuditLog al: list) {
+        	//Load in the set
+        	
+        }
+        
+        for(ViewRecord vr: newDownLoadSet) {
+        	if(!currentDownLoadSet.contains(vr)) {
+        		//Get Create Attributes for this 
+        		
+        		//Create a new TitusDocument2 record and set the values
+        		
+        		//Save it to Database
+        	}
+        }
+        
+        System.out.println(list);
 
 	}
 }

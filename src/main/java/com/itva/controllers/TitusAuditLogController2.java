@@ -53,6 +53,9 @@ public class TitusAuditLogController2 {
 	@Value("${tc.shared-document-drive-id}")
 	private String tcSharedDocumentDriveId;
 	
+	@Value("${tc.site-url}")
+	private String siteUrl;
+	
 	@Autowired
 	private JdbcTemplate template;
 
@@ -64,7 +67,7 @@ public class TitusAuditLogController2 {
 			val tds = titusDocument2Repository.findAll();
 		
 			checkForNewViewsAndInsert(tds);
-			Util.checkNewDownloads(template, tds);
+			Util.checkNewDownloads(template, tds, siteUrl);
 		}
 		
 		val tds = titusDocument2Repository.findAll();
@@ -73,6 +76,7 @@ public class TitusAuditLogController2 {
 		
 		for(TitusDocument2 td: tds) {
 			td.setDocumentName(URLDecoder.decode(td.getDocumentName(), "UTF-8"));
+			td.setSiteFullPath(URLDecoder.decode(siteUrl, "UTF-8"));
 		}
 
 		logger.debug("completed it");
