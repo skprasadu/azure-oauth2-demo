@@ -12,7 +12,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function BasicTable() {
-  const [data, setData] = useState([] );
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   async function fetchData(checkForChanges) {
@@ -20,73 +20,85 @@ export default function BasicTable() {
     setLoading(true);
     const result = await axios(
       //'https://tc-func-app1.azurewebsites.net/api/listTitusAuditLogs',
-      '/api/listTitusAuditLogs?checkForChanges=' + checkForChanges,
+      '/api/listTitusAuditLogs?checkForChanges=' + checkForChanges
     );
     setData(result.data);
     setLoading(false);
   }
 
   useEffect(() => {
-    fetchData(false);    
+    fetchData(false);
   }, []);
 
   return (
     <>
-      <IconButton color="primary" aria-label="upload picture" component="span" 
-        onClick={() => { fetchData(true); }}>
-            <RefreshIcon />
+      <IconButton
+        color="primary"
+        aria-label="upload picture"
+        component="span"
+        onClick={() => {
+          fetchData(true);
+        }}
+      >
+        <RefreshIcon />
       </IconButton>
-      {loading ? <CircularProgress size={14} /> : <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Document Name</TableCell>
-              <TableCell align="right">User Name</TableCell>
-              <TableCell align="right">Access Type</TableCell>
-              <TableCell align="right">App Version</TableCell>
-              <TableCell align="right">Contains CUI</TableCell>
-              <TableCell>Contains ECI</TableCell>
-              <TableCell align="right">Designation</TableCell>
-              <TableCell align="right">Doc Security</TableCell>
-              <TableCell align="right">Hyperlinks Changed</TableCell>
-              <TableCell align="right">Links Up To Date</TableCell>
-              <TableCell>Proprietary</TableCell>
-              <TableCell align="right">Scale Crop</TableCell>
-              <TableCell align="right">Share Doc</TableCell>
-              <TableCell align="right">Titus GUID</TableCell>
-              <TableCell align="right">Visual Mark</TableCell>
-              <TableCell align="right">Logged Time</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <TableRow
-                key={row.documentName}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.documentName}
-                </TableCell>
-                <TableCell align="right">{row.userName}</TableCell>
-                <TableCell align="right">{row.accessType}</TableCell>
-                <TableCell align="right">{row.appVersion}</TableCell>
-                <TableCell align="right">{row.containsCUI}</TableCell>
-                <TableCell align="right">{row.containsECI}</TableCell>
-                <TableCell align="right">{row.designation}</TableCell>
-                <TableCell align="right">{row.docSecurity}</TableCell>
-                <TableCell align="right">{row.hyperlinksChanged}</TableCell>
-                <TableCell align="right">{row.linksUpToDate}</TableCell>
-                <TableCell align="right">{row.proprietary}</TableCell>
-                <TableCell align="right">{row.scaleCrop}</TableCell>
-                <TableCell align="right">{row.shareDoc}</TableCell>
-                <TableCell align="right">{row.titusGUID}</TableCell>
-                <TableCell align="right">{row.visualMark}</TableCell>
-                <TableCell align="right">{row.loggedTime}</TableCell>
+      {loading ? (
+        <CircularProgress size={14} />
+      ) : (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Document Name</TableCell>
+                <TableCell align="right">User Name</TableCell>
+                <TableCell align="right">Access Type</TableCell>
+                <TableCell align="right">App Version</TableCell>
+                <TableCell align="right">Contains CUI</TableCell>
+                <TableCell>Contains ECI</TableCell>
+                <TableCell align="right">Designation</TableCell>
+                <TableCell align="right">Doc Security</TableCell>
+                <TableCell align="right">Hyperlinks Changed</TableCell>
+                <TableCell align="right">Links Up To Date</TableCell>
+                <TableCell>Proprietary</TableCell>
+                <TableCell align="right">Scale Crop</TableCell>
+                <TableCell align="right">Share Doc</TableCell>
+                <TableCell align="right">Titus GUID</TableCell>
+                <TableCell align="right">Visual Mark</TableCell>
+                <TableCell align="right">Site URL</TableCell>
+                <TableCell align="right">Logged Time</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>}
+            </TableHead>
+            <TableBody>
+              {data.map((row) => (
+                <TableRow
+                  key={row.documentName}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.documentName}
+                  </TableCell>
+                  <TableCell align="right">{row.userName}</TableCell>
+                  <TableCell align="right">{row.accessType}</TableCell>
+                  <TableCell align="right">{row.appVersion}</TableCell>
+                  <TableCell align="right">{row.containsCUI}</TableCell>
+                  <TableCell align="right">{row.containsECI}</TableCell>
+                  <TableCell align="right">{row.designation}</TableCell>
+                  <TableCell align="right">{row.docSecurity}</TableCell>
+                  <TableCell align="right">{row.hyperlinksChanged}</TableCell>
+                  <TableCell align="right">{row.linksUpToDate}</TableCell>
+                  <TableCell align="right">{row.proprietary}</TableCell>
+                  <TableCell align="right">{row.scaleCrop}</TableCell>
+                  <TableCell align="right">{row.shareDoc}</TableCell>
+                  <TableCell align="right">{row.titusGUID}</TableCell>
+                  <TableCell align="right">{row.visualMark}</TableCell>
+                  <TableCell align="right">{row.siteFullPath}</TableCell>
+                  <TableCell align="right">{row.loggedTime}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </>
   );
 }

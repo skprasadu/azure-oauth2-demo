@@ -67,7 +67,7 @@ public class TitusAuditLogController2 {
 			val tds = titusDocument2Repository.findAll();
 		
 			checkForNewViewsAndInsert(tds);
-			Util.checkNewDownloads(template, tds, siteUrl);
+			Util.checkNewDownloads(template, tds, siteUrl, titusDocument2Repository);
 		}
 		
 		val tds = titusDocument2Repository.findAll();
