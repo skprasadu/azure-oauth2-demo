@@ -25,6 +25,7 @@ public class TitusDocument2 {
 	private String siteFullPath;
 	private String documentName;
 	private String userName;
+	private String userId;
 	private String accessType;
 	private Timestamp loggedTime;
 	

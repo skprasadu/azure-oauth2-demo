@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -160,58 +162,40 @@ public class Util {
 		return visitorsPayloadList;
 	}
 
-	public static void checkNewDownloads(JdbcTemplate jdbcTemplate, List<TitusDocument2> tds, String siteUrl, TitusDocument2Repository titusDocument2Repository) {
+	public static void checkNewDownloads(JdbcTemplate jdbcTemplate, List<TitusDocument2> tds, String siteUrl,
+			TitusDocument2Repository titusDocument2Repository) {
 		val sql = "SELECT * FROM AuditLog where siteUrl=?";
 
 		List<AuditLog> list = jdbcTemplate.query(sql, new Object[] { siteUrl },
 				new BeanPropertyRowMapper(AuditLog.class));
 
-		val currentDownLoadSet = new HashSet<ViewRecord>();
-		for (TitusDocument2 td : tds) {
-			// Load in the second set
-			val listDownloadedFiles = tds.stream().filter(x -> x.getAccessType().equals("FileDownloaded"))
-					.collect(Collectors.toList());
+		val currentDownLoadSet = tds.stream().filter(x -> x.getAccessType().equals("FileDownloaded"))
+				.map(x -> new ViewRecord(x.getDocumentName(), x.getLoggedTime(), x.getUserId(), null))
+				.collect(Collectors.toSet());
 
-			for (TitusDocument2 tdDownloaded : listDownloadedFiles) {
-				currentDownLoadSet
-						.add(new ViewRecord(tdDownloaded.getDocumentName(), tdDownloaded.getLoggedTime(), tdDownloaded.getUserName(), null));
-			}
-		}
+		val newDownLoadSet = list.stream()
+				.map(x -> new ViewRecord(x.getSourceFileName(), x.getCreationTime(), x.getUserId(), null))
+				.collect(Collectors.toSet());
 
-		val newDownLoadSet = new HashSet<ViewRecord>();
-		for (AuditLog al : list) {
-			// Load in the set
-			newDownLoadSet.add(new ViewRecord(al.getSourceFileName(), al.getCreationTime(), al.getUserId(), null));
-		}
+		Predicate<ViewRecord> notInDatabase = x -> !currentDownLoadSet.contains(x);
 
-		for (val vr : newDownLoadSet) {
-			if (!currentDownLoadSet.contains(vr)) {
-				System.out.println(vr);
-				// Get Create Attributes for this
-				val td = tds.stream().filter(x -> x.getAccessType().equals("CREATED")
-						&& x.getDocumentName().equals(vr.getFileName()) && x.getUserName().equals(vr.getDisplayName()))
-						.findAny()
-						.map(x -> 							
-							 TitusDocument2.builder().documentName(vr.getFileName())
-									.userName(vr.getDisplayName()).accessType("FileDownloaded").eci(x.getEci())
-									.eciCoC(x.getEciCoC()).eciJuris(x.getEciJuris()).eciClass(x.getEciClass())
-									.export(x.getExport()).exAuth(x.getExAuth()).containsCUI(x.getContainsCUI())
-									.cui(x.getCui()).dissemination(x.getDissemination()).proprietary(x.getProprietary())
-									.proprietaryType(x.getProprietaryType())
-									.proprietaryStatement(x.getProprietaryStatement())
-									.loggedTime(vr.getActivityDateTime()).build()
-						)
-						.orElseGet(() ->  TitusDocument2.builder().documentName(vr.getFileName())
-									.userName(vr.getDisplayName()).accessType("FileDownloaded")
-									.loggedTime(vr.getActivityDateTime()).build()
-						);
-				
-				titusDocument2Repository.save(td);
+		BiFunction<TitusDocument2, ViewRecord, Boolean> fileAndUser = (x,
+				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId().equals(vr.getDisplayName());
 
-			}
-		}
+		val tdList = newDownLoadSet.stream().filter(notInDatabase).map(vr -> tds.stream()
+				.filter(x -> fileAndUser.apply(x, vr)).findAny()
+				.map(x -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getDisplayName())
+						.userName(x.getUserName()).accessType("FileDownloaded").eci(x.getEci()).eciCoC(x.getEciCoC())
+						.eciJuris(x.getEciJuris()).eciClass(x.getEciClass()).export(x.getExport()).exAuth(x.getExAuth())
+						.containsCUI(x.getContainsCUI()).cui(x.getCui()).dissemination(x.getDissemination())
+						.proprietary(x.getProprietary()).proprietaryType(x.getProprietaryType())
+						.proprietaryStatement(x.getProprietaryStatement()).loggedTime(vr.getActivityDateTime())
+						.siteFullPath(siteUrl).build())
+				.orElseGet(() -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getDisplayName())
+						.accessType("FileDownloaded").loggedTime(vr.getActivityDateTime()).build()))
+				.collect(Collectors.toList());
 
-		System.out.println(list);
-
+		System.out.println("tdList= " + tdList);
+		tdList.forEach(titusDocument2Repository::save);
 	}
 }
