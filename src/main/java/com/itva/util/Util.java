@@ -170,11 +170,11 @@ public class Util {
 				new BeanPropertyRowMapper(AuditLog.class));
 
 		val currentDownLoadSet = tds.stream().filter(x -> x.getAccessType().equals("FileDownloaded"))
-				.map(x -> new ViewRecord(x.getDocumentName(), x.getLoggedTime(), x.getUserId(), null))
+				.map(x -> new ViewRecord(x.getDocumentName(), x.getLoggedTime(), x.getUserName(), x.getUserId(), null))
 				.collect(Collectors.toSet());
 
 		val newDownLoadSet = list.stream()
-				.map(x -> new ViewRecord(x.getSourceFileName(), x.getCreationTime(), x.getUserId(), null))
+				.map(x -> new ViewRecord(x.getSourceFileName(), x.getCreationTime(), null, x.getUserId(), null))
 				.collect(Collectors.toSet());
 
 		Predicate<ViewRecord> notInDatabase = x -> !currentDownLoadSet.contains(x);

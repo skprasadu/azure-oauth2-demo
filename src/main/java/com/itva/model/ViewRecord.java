@@ -13,7 +13,9 @@ import lombok.EqualsAndHashCode;
 public class ViewRecord {
 	private String fileName;
 	private Timestamp activityDateTime;
+	@EqualsAndHashCode.Exclude
 	private String displayName;
+	private String email;
 	
 	@EqualsAndHashCode.Exclude
 	private Map<String, Object> fields;
