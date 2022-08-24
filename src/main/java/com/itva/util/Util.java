@@ -195,7 +195,7 @@ public class Util {
 						.accessType("FileDownloaded").loggedTime(vr.getActivityDateTime()).build()))
 				.collect(Collectors.toList());
 
-		System.out.println("tdList= " + tdList);
+		//System.out.println("tdList= " + tdList);
 		tdList.forEach(titusDocument2Repository::save);
 	}
 }
