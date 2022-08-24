@@ -180,7 +180,7 @@ public class Util {
 		Predicate<ViewRecord> notInDatabase = x -> !currentDownLoadSet.contains(x);
 
 		BiFunction<TitusDocument2, ViewRecord, Boolean> fileAndUser = (x,
-				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId().equals(vr.getDisplayName());
+				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId() != null && x.getUserId().equals(vr.getDisplayName());
 
 		val tdList = newDownLoadSet.stream().filter(notInDatabase).map(vr -> tds.stream()
 				.filter(x -> fileAndUser.apply(x, vr)).findAny()
