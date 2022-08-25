@@ -4,9 +4,11 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@Builder
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor

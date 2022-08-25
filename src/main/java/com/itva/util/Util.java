@@ -169,22 +169,25 @@ public class Util {
 		List<AuditLog> list = jdbcTemplate.query(sql, new Object[] { siteUrl },
 				new BeanPropertyRowMapper(AuditLog.class));
 
-		val currentDownLoadSet = tds.stream().filter(x -> x.getAccessType().equals("FileDownloaded"))
-				.map(x -> new ViewRecord(x.getDocumentName(), x.getLoggedTime(), x.getUserName(), x.getUserId(), null))
+		val currentDownLoadSet = tds
+				.stream().filter(x -> x.getAccessType().equals("FileDownloaded")).map(x -> ViewRecord.builder()
+						.fileName(x.getDocumentName()).activityDateTime(x.getLoggedTime()).email(x.getUserId()).build())
 				.collect(Collectors.toSet());
 
-		val newDownLoadSet = list.stream()
-				.map(x -> new ViewRecord(x.getSourceFileName(), x.getCreationTime(), null, x.getUserId(), null))
+		val newDownLoadSet = list
+				.stream().map(x -> ViewRecord.builder().fileName(x.getSourceFileName())
+						.activityDateTime(x.getCreationTime()).email(x.getUserId()).build())
 				.collect(Collectors.toSet());
 
 		Predicate<ViewRecord> notInDatabase = x -> !currentDownLoadSet.contains(x);
 
 		BiFunction<TitusDocument2, ViewRecord, Boolean> fileAndUser = (x,
-				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId() != null && x.getUserId().equals(vr.getEmail());
+				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId() != null
+						&& x.getUserId().equals(vr.getEmail());
 
 		val tdList = newDownLoadSet.stream().filter(notInDatabase).map(vr -> tds.stream()
 				.filter(x -> fileAndUser.apply(x, vr)).findFirst()
-				.map(x -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getDisplayName())
+				.map(x -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getEmail())
 						.userName(x.getUserName()).accessType("FileDownloaded").eci(x.getEci()).eciCoC(x.getEciCoC())
 						.eciJuris(x.getEciJuris()).eciClass(x.getEciClass()).export(x.getExport()).exAuth(x.getExAuth())
 						.containsCUI(x.getContainsCUI()).cui(x.getCui()).dissemination(x.getDissemination())
@@ -195,7 +198,7 @@ public class Util {
 						.accessType("FileDownloaded").loggedTime(vr.getActivityDateTime()).build()))
 				.collect(Collectors.toList());
 
-		//System.out.println("tdList= " + tdList);
+		// System.out.println("tdList= " + tdList);
 		tdList.forEach(titusDocument2Repository::save);
 	}
 }
