@@ -78,6 +78,9 @@ public class TitusAuditLogController2 {
 		for (TitusDocument2 td : tds) {
 			td.setDocumentName(URLDecoder.decode(td.getDocumentName(), "UTF-8"));
 			td.setSiteFullPath(URLDecoder.decode(siteUrl, "UTF-8"));
+			if(td.getUserId() != null) {
+				td.setUserId(td.getUserId().toLowerCase());
+			}
 		}
 
 		logger.debug("completed it");

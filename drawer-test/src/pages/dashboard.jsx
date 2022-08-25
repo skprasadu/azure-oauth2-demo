@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
 import createPlotlyComponent from 'react-plotly.js/factory';
@@ -14,16 +14,16 @@ const Plot = createPlotlyComponent(window.Plotly);
 const PlotlyRenderers = createPlotlyRenderers(Plot);
 
 const pivotPresets = {
-  cols: ["eciJuris"],
-  rows: ["documentName", "userName"],
-  rendererName: "Table Heatmap",
-  aggregatorName: "Count",
-  vals: ["accessType"]
+  cols: ['eciJuris'],
+  rows: ['userId', 'documentName', 'accessType'],
+  rendererName: 'Table Heatmap',
+  aggregatorName: 'Count',
+  vals: ['accessType'],
 };
 
 export default function Dashboard(props) {
-  const [state, setState] = useState(props); 
-  const [data, setData] = useState([]); 
+  const [state, setState] = useState(props);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   async function fetchData(checkForChanges) {
@@ -31,25 +31,29 @@ export default function Dashboard(props) {
     setLoading(true);
     const result = await axios(
       //'https://tc-func-app1.azurewebsites.net/api/listTitusAuditLogs',
-      '/api/listTitusAuditLogs2?checkForChanges=' + checkForChanges,
+      '/api/listTitusAuditLogs2?checkForChanges=' + checkForChanges
     );
     setData(result.data);
     setLoading(false);
   }
 
   useEffect(() => {
-    fetchData(false);    
+    fetchData(false);
   }, []);
 
   return (
     <>
-      {loading ? <CircularProgress size={14} /> :<PivotTableUI
-              data={data}
-              onChange={s => setState(s)}
-              renderers={Object.assign({}, TableRenderers, PlotlyRenderers)}
-              {...pivotPresets}
-              {...state}
-          />}
+      {loading ? (
+        <CircularProgress size={14} />
+      ) : (
+        <PivotTableUI
+          data={data}
+          onChange={(s) => setState(s)}
+          renderers={Object.assign({}, TableRenderers, PlotlyRenderers)}
+          {...pivotPresets}
+          {...state}
+        />
+      )}
     </>
   );
 }
