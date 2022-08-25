@@ -183,7 +183,7 @@ public class Util {
 				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId() != null && x.getUserId().equals(vr.getDisplayName());
 
 		val tdList = newDownLoadSet.stream().filter(notInDatabase).map(vr -> tds.stream()
-				.filter(x -> fileAndUser.apply(x, vr)).findAny()
+				.filter(x -> fileAndUser.apply(x, vr)).findFirst()
 				.map(x -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getDisplayName())
 						.userName(x.getUserName()).accessType("FileDownloaded").eci(x.getEci()).eciCoC(x.getEciCoC())
 						.eciJuris(x.getEciJuris()).eciClass(x.getEciClass()).export(x.getExport()).exAuth(x.getExAuth())
