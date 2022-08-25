@@ -180,7 +180,7 @@ public class Util {
 		Predicate<ViewRecord> notInDatabase = x -> !currentDownLoadSet.contains(x);
 
 		BiFunction<TitusDocument2, ViewRecord, Boolean> fileAndUser = (x,
-				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId() != null && x.getUserId().equals(vr.getDisplayName());
+				vr) -> x.getDocumentName().equals(vr.getFileName()) && x.getUserId() != null && x.getUserId().equals(vr.getEmail());
 
 		val tdList = newDownLoadSet.stream().filter(notInDatabase).map(vr -> tds.stream()
 				.filter(x -> fileAndUser.apply(x, vr)).findFirst()
@@ -191,7 +191,7 @@ public class Util {
 						.proprietary(x.getProprietary()).proprietaryType(x.getProprietaryType())
 						.proprietaryStatement(x.getProprietaryStatement()).loggedTime(vr.getActivityDateTime())
 						.siteFullPath(siteUrl).build())
-				.orElseGet(() -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getDisplayName())
+				.orElseGet(() -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getEmail())
 						.accessType("FileDownloaded").loggedTime(vr.getActivityDateTime()).build()))
 				.collect(Collectors.toList());
 
