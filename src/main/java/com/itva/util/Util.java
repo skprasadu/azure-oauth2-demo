@@ -186,7 +186,7 @@ public class Util {
 						&& x.getUserId().equals(vr.getEmail());
 
 		val tdList = newDownLoadSet.stream().filter(notInDatabase).map(vr -> tds.stream()
-				.filter(x -> fileAndUser.apply(x, vr)).findFirst()
+				.filter(x -> fileAndUser.apply(x, vr)).findAny()
 				.map(x -> TitusDocument2.builder().documentName(vr.getFileName()).userId(vr.getEmail())
 						.userName(x.getUserName()).accessType("FileDownloaded").eci(x.getEci()).eciCoC(x.getEciCoC())
 						.eciJuris(x.getEciJuris()).eciClass(x.getEciClass()).export(x.getExport()).exAuth(x.getExAuth())

@@ -51,6 +51,7 @@ export default function BasicTable() {
               <TableRow>
                 <TableCell>Document Name</TableCell>
                 <TableCell align="right">User Name</TableCell>
+                <TableCell align="right">Email Id</TableCell>
                 <TableCell align="right">Access Type</TableCell>
                 <TableCell align="right">ECI</TableCell>
                 <TableCell align="right">ECICoC</TableCell>
@@ -78,6 +79,7 @@ export default function BasicTable() {
                     {row.documentName}
                   </TableCell>
                   <TableCell align="right">{row.userName}</TableCell>
+                  <TableCell align="right">{row.userId}</TableCell>
                   <TableCell align="right">{row.accessType}</TableCell>
                   <TableCell align="right">{row.eci}</TableCell>
                   <TableCell align="right">{row.eciCoC}</TableCell>
