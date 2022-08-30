@@ -1,0 +1,14 @@
+param
+(
+    [Parameter(Mandatory=$false)]
+    [object] $WebhookData
+)
+
+if($WebhookData -ne $null) 
+        {
+            "using webhookdata"
+            $WebhookName =  $WebhookData.WebhookName
+            $WebhookBody =  $WebhookData.RequestBody
+            $webhookBodyObject = $WebhookBody | ConvertFrom-Json
+			Write-Output "welcome  $($webhookBodyObject.name)"
+		}

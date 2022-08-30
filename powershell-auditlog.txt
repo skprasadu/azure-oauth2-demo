@@ -1,0 +1,57 @@
+//powershell script
+
+$username = <azure login>
+$password = <azure password>
+$secureStringPwd = $password | ConvertTo-SecureString -AsPlainText -Force 
+$creds = New-Object System.Management.Automation.PSCredential -ArgumentList $username, $secureStringPwd
+
+Connect-ExchangeOnline -Credential $creds
+
+#Set Date Filters - past 7 days!
+$StartDate = (Get-Date).AddDays(-1)
+$EndDate = Get-Date
+
+#Search Unified Log
+$SharePointLog = Search-UnifiedAuditLog -StartDate $StartDate -EndDate $EndDate -Operations "FileDownloaded"
+
+if($SharePointLog) {
+	$AuditLogResults = $SharePointLog.AuditData | ConvertFrom-Json | Select CreationTime,UserId,Operation, ObjectID,SiteUrl,SourceFileName,ClientIP
+
+	$sqlConn = New-Object System.Data.SqlClient.SqlConnection
+
+	$sqlConn.ConnectionString = “Server=tcp:kp-svr.database.windows.net,1433;Initial Catalog=kp-tc-db;Persist Security Info=False;User ID=kp_admin;Password=Pass@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;”
+	$sqlConn.Open()
+
+	$Command = New-Object System.Data.SQLClient.SQLCommand
+	$Command.Connection = $sqlConn
+
+	$ErrorCounter = 0
+
+	foreach ($line in $AuditLogResults)
+	{
+		$name = $line.UserId
+		$creationTime = $line.CreationTime
+		$ops = $line.Operation
+		$objectID = $line.ObjectID
+		$siteUrl = $line.SiteUrl
+		$sourceFileName = $line.SourceFileName
+
+		$insertquery="INSERT INTO AuditLog ([CreationTime],[UserId],[Operation],[SiteUrl],[SourceFileName]) VALUES ('$creationTime', '$name', '$ops', '$siteUrl', '$sourceFileName')"
+
+		Write-host $insertquery
+
+		$Command.CommandText = $insertquery
+
+		try {
+			$Command.ExecuteNonQuery()
+		}
+		catch {
+			$ErrorCounter = $ErrorCounter + 1
+		}
+	}
+	
+	Write-host 'Record not processed $ErrorCounter'
+
+	$sqlConn.Close()
+}
+Disconnect-ExchangeOnline -Confirm:$false

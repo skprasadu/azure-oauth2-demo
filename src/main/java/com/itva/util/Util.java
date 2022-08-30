@@ -94,7 +94,7 @@ public class Util {
 						+ propertyName.substring(1, propertyName.length());
 
 				try {
-					Class cls = String.class;
+					Class<String> cls = String.class;
 					/*
 					 * if(methodName.equals("setLoggedTime")) { cls = Timestamp.class; }
 					 */
@@ -166,8 +166,7 @@ public class Util {
 			TitusDocument2Repository titusDocument2Repository) {
 		val sql = "SELECT * FROM AuditLog where siteUrl=?";
 
-		List<AuditLog> list = jdbcTemplate.query(sql, new Object[] { siteUrl },
-				new BeanPropertyRowMapper(AuditLog.class));
+		val list = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(AuditLog.class), siteUrl);
 
 		val currentDownLoadSet = tds
 				.stream().filter(x -> x.getAccessType().equals("FileDownloaded")).map(x -> ViewRecord.builder()
